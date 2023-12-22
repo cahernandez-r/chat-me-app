@@ -1,0 +1,14 @@
+{
+  "label": {
+    "chat-mee": "ChatMee...",
+    "register": "Register",
+    "user-name": "User name",
+    "security-word": "Security word",
+    "set-security-word": "Please <b>set</b> your security word",
+    "create-security-word": "Please <b>create</b> your security word"
+  },
+  "tooltip": {
+    "close": "Close",
+    "submit": "Submit"
+  }
+}
