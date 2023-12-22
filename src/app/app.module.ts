@@ -20,7 +20,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
           useFactory: httpTranslateLoader,
           deps: [HttpClient]
       },
-      defaultLanguage: 'es'
+      defaultLanguage: 'en'
     }),
 
   ],

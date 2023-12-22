@@ -1,0 +1,41 @@
+
+<p-toast></p-toast>
+<div class="flex justify-content-center align-items-center h-screen w-full" style="background-color: #000;">
+  <div class="h-27rem w-20rem border-round-md">
+    <p-panel>
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center justify-content-center gap-4 text-center w-full">
+          <h3 style="color: #22C55E;">{{ 'label.chat-mee' | translate }}</h3>
+          <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
+        </div>
+      </ng-template>
+      <div class="text-center my-2">
+        <h1 style="color: #22C55E;">{{ 'label.register' | translate }}</h1>
+      </div>
+      <div class="mt-6">
+        <label class="required" for="userName">{{ 'label.user-name' | translate }}</label>
+        <input
+          pInputText
+          id="userName"
+          type="text"
+          placeholder="robot..."
+          [(ngModel)]="userName"
+        />
+      </div>
+      <div class="flex mt-4 justify-content-center mb-4">
+        <p-button
+          [disabled]="!userName || userName.length < 4"
+          icon="pi pi-check"
+          severity="success"
+          [raised]="true"
+          [rounded]="true"
+          pTooltip="{{ 'tooltip.submit' | translate }}"
+          tooltipPosition="top"
+          [loading]="loading"
+          (click)="createUserOrLogin()"
+        >
+        </p-button>
+      </div>
+    </p-panel>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<div>
+  <div class="text-center mb-4">
+    <h3 style="color: #22C55E;">Security word</h3>
+  </div>
+
+  <div *ngIf="userExists" [innerHTML]="'label.set-security-word' | translate"></div>
+  <div *ngIf="!userExists" [innerHTML]="'label.create-security-word' | translate"></div>
+
+  <div class="flex flex-column my-4">
+    <label class="required" for="securityw">{{ 'label.security-word' | translate }}</label>
+    <input
+      pInputText
+      id="securityw"
+      type="text"
+      placeholder="monkeyd..."
+      [(ngModel)]="securityWord"
+    />
+  </div>
+
+  <div class="flex justify-content-end gap-2">
+    <p-button
+      [disabled]="!securityWord || securityWord.length < 5"
+      icon="pi pi-check"
+      severity="success"
+      [raised]="true"
+      [rounded]="true"
+      pTooltip="{{ 'tooltip.submit' | translate }}"
+      tooltipPosition="top"
+      (click)="validateCreateSecurityWord()"
+      size="small"
+      [loading]="loading"
+    >
+    </p-button>
+    <p-button
+      icon="pi pi-times"
+      severity="danger"
+      [raised]="true"
+      [outlined]="true"
+      [rounded]="true"
+      pTooltip="{{ 'tooltip.close' | translate }}"
+      tooltipPosition="top"
+      (click)="close()"
+      size="small"
+    >
+    </p-button>
+  </div>
+</div>
