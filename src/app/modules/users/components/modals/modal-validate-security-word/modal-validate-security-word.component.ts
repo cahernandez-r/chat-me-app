@@ -3,7 +3,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UserService } from '../../../services/user.service';
 import { UserDTO } from '../../../models/user';
 import { MessageService } from 'primeng/api';
-import { SeverityMessages } from 'src/app/core/constants/enums';
+import { SeverityMessages, StorageKeys } from 'src/app/core/constants/enums';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -56,7 +56,9 @@ export class ModalValidateSecurityWordComponent implements OnInit{
     this.userService.createUser(userToCreate).subscribe({
       next:(response: UserDTO) => {
         this.showMessage(SeverityMessages.SUCCESS, this.translate.instant('messages.info.INFO001'));
-
+        const jsonUser: string = JSON.stringify(response);
+        sessionStorage.setItem(StorageKeys.INFORMATION_USER, jsonUser);
+        this.ref.close(true);
       },
       error:(e) => console.log(e)
 
@@ -67,6 +69,12 @@ export class ModalValidateSecurityWordComponent implements OnInit{
     this.userService.validateSecurityWord(this.userName, this.securityWord).subscribe({
       next:(response: boolean) => {
         //Close modal an redirect if is true
+        if (response) {
+          this.ref.close(true);
+          return;
+        }
+        this.showMessage(SeverityMessages.ERROR, this.translate.instant('messages.error.ERR001'));
+        this.securityWord = "";
       },
       error:(e) => console.log(e)
 

@@ -3,9 +3,9 @@
     "chat-mee": "ChatMee...",
     "register": "Register",
     "user-name": "User name",
-    "security-word": "Security word",
-    "set-security-word": "Please <b>set</b> your security word",
-    "create-security-word": "Please <b>create</b> your security word"
+    "security-word": "Safeword",
+    "set-security-word": "Please <b>set</b> your Safeword",
+    "create-security-word": "Please <b>create</b> your Safeword"
   },
   "tooltip": {
     "close": "Close",
@@ -13,7 +13,10 @@
   },
   "messages": {
     "info": {
-      "INFO001":"User created successfully"
+      "INFO001": "User created successfully"
+    },
+    "error" : {
+      "ERR001": "Safeword does not match"
     }
   }
 
