@@ -10,5 +10,11 @@
   "tooltip": {
     "close": "Close",
     "submit": "Submit"
+  },
+  "messages": {
+    "info": {
+      "INFO001":"User created successfully"
+    }
   }
+
 }

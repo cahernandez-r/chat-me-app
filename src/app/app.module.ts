@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     }),
 
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

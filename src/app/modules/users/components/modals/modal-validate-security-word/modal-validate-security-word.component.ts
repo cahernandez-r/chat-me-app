@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UserService } from '../../../services/user.service';
 import { UserDTO } from '../../../models/user';
+import { MessageService } from 'primeng/api';
+import { SeverityMessages } from 'src/app/core/constants/enums';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-modal-validate-security-word',
@@ -15,7 +18,13 @@ export class ModalValidateSecurityWordComponent implements OnInit{
   userName: string = "";
   loading: boolean = false;
 
-  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private userService: UserService) {
+  constructor(
+    private ref: DynamicDialogRef,
+    private config: DynamicDialogConfig,
+    private userService: UserService,
+    private messageService: MessageService,
+    private translate: TranslateService
+    ) {
   }
 
   ngOnInit(): void {
@@ -46,8 +55,8 @@ export class ModalValidateSecurityWordComponent implements OnInit{
 
     this.userService.createUser(userToCreate).subscribe({
       next:(response: UserDTO) => {
-        console.log(response)
-        //Close modal an redirect if is true
+        this.showMessage(SeverityMessages.SUCCESS, this.translate.instant('messages.info.INFO001'));
+
       },
       error:(e) => console.log(e)
 
@@ -57,7 +66,6 @@ export class ModalValidateSecurityWordComponent implements OnInit{
   validateSecurityWord():void {
     this.userService.validateSecurityWord(this.userName, this.securityWord).subscribe({
       next:(response: boolean) => {
-        console.log(response)
         //Close modal an redirect if is true
       },
       error:(e) => console.log(e)
@@ -67,5 +75,12 @@ export class ModalValidateSecurityWordComponent implements OnInit{
 
   close():void {
     this.ref.close();
+  }
+
+  showMessage(severity: string, message: string):void {
+    this.messageService.add({
+      severity: severity,
+      detail: message,
+    });
   }
 }
