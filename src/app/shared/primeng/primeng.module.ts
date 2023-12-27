@@ -10,6 +10,7 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
+import { MenubarModule } from 'primeng/menubar';
 
 @NgModule({
   declarations: [],
@@ -27,7 +28,8 @@ import { TranslateModule } from '@ngx-translate/core';
     DynamicDialogModule,
     ToastModule,
     TooltipModule,
-    TranslateModule
+    TranslateModule,
+    MenubarModule
   ],
 })
 export class PrimengModule { }

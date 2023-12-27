@@ -1,11 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
 @import "primeicons/primeicons.css";
-
+$base-color-text: #22C55E;
 * {
   margin: 0;
+  // background-color: #000;
+
+  //font-weight: ;
 }
 
 .required::after {
   content: "*";
   color: red;
+}
+
+:host ::ng-deep .p-menubar .p-menuitem-text,
+:host ::ng-deep .p-menubar .p-menuitem-icon {
+  //background-color: #000;
+  color: $base-color-text;
+  font-weight: bold;
+  margin: 0 0.5rem;
 }
