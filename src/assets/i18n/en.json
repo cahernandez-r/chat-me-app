@@ -5,7 +5,10 @@
     "user-name": "User name",
     "security-word": "Safeword",
     "set-security-word": "Please <b>set</b> your Safeword",
-    "create-security-word": "Please <b>create</b> your Safeword"
+    "create-security-word": "Please <b>create</b> your Safeword",
+    "message-welcome": "Chatmee is a simple application, created using angular and springboot. It was created with the purpose of putting into practice communication with the backend through websockets, to start chatting you can select the find people option or if you already have previous chats you can also enter that option directly.",
+    "welcome-app": "Welcome to ChatMee!"
+
   },
   "tooltip": {
     "close": "Close",
