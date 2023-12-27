@@ -8,12 +8,14 @@ import { ModalValidateSecurityWordComponent } from './components/modals/modal-va
 import { DialogService } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { FindPeopleComponent } from './components/find-people/find-people.component';
 
 
 @NgModule({
   declarations: [
     CreateUsersComponent,
-    ModalValidateSecurityWordComponent
+    ModalValidateSecurityWordComponent,
+    FindPeopleComponent
 
   ],
   imports: [

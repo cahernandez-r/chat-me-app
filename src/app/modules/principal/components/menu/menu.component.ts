@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { PrincipalService } from '../../services/principal.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -10,16 +12,23 @@ export class MenuComponent {
 
   items: MenuItem[] | undefined;
 
-    ngOnInit() {
-      this.items = [
-        {
-          label: 'Find people',
-          icon: 'pi pi-search',
-        },
-        {
-          label: 'My Chats',
-          icon: 'pi pi-comments',
-        },
-      ];
-    }
+  constructor(
+    private principalService: PrincipalService,
+    private router: Router) {
+
+  }
+
+  ngOnInit() {
+    this.fetchItemsMenu();
+  }
+
+  fetchItemsMenu():void {
+    this.principalService.fetchAllResourcesMenu().subscribe({
+      next: (response: MenuItem[]) => {
+        response.forEach((resource) => resource.routerLink = `/${this.router.url.split('/')[1]}${resource.routerLink}`)
+        this.items = response;
+      },
+      error: (e) => console.log(e)
+    });
+  }
 }
