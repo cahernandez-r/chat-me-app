@@ -56,8 +56,7 @@ export class ModalValidateSecurityWordComponent implements OnInit{
     this.userService.createUser(userToCreate).subscribe({
       next:(response: UserDTO) => {
         this.showMessage(SeverityMessages.SUCCESS, this.translate.instant('messages.info.INFO001'));
-        const jsonUser: string = JSON.stringify(response);
-        sessionStorage.setItem(StorageKeys.INFORMATION_USER, jsonUser);
+        this.setUserInfoSessionStorage(response);
         this.ref.close(true);
       },
       error:(e) => console.log(e)
@@ -70,6 +69,11 @@ export class ModalValidateSecurityWordComponent implements OnInit{
       next:(response: boolean) => {
         //Close modal an redirect if is true
         if (response) {
+          const userInfo: UserDTO = {
+            securityWord: this.securityWord,
+            userName: this.userName
+          }
+          this.setUserInfoSessionStorage(userInfo);
           this.ref.close(true);
           return;
         }
@@ -82,7 +86,12 @@ export class ModalValidateSecurityWordComponent implements OnInit{
   }
 
   close():void {
-    this.ref.close();
+    this.ref.close(false);
+  }
+
+  setUserInfoSessionStorage(userInfo: UserDTO):void {
+    const jsonUser: string = JSON.stringify(userInfo);
+    sessionStorage.setItem(StorageKeys.INFORMATION_USER, jsonUser);
   }
 
   showMessage(severity: string, message: string):void {

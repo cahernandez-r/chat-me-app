@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { DialogService } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UserService } from '../../services/user.service';
 import { ModalValidateSecurityWordComponent } from '../modals/modal-validate-security-word/modal-validate-security-word.component';
 
@@ -35,7 +35,7 @@ export class CreateUsersComponent {
   }
 
   openModalSecurityWord(userExistsInBd: boolean): void {
-    this.dialogService.open(ModalValidateSecurityWordComponent, {
+    const ref: DynamicDialogRef = this.dialogService.open(ModalValidateSecurityWordComponent, {
       //header: "Validate security word",
       width: "30%",
       height: "35%",
@@ -43,6 +43,17 @@ export class CreateUsersComponent {
       data: {
         userExists: userExistsInBd,
         userName: this.userName
+      }
+    });
+
+    this.onCloseModal(ref);
+  }
+
+  onCloseModal(ref: DynamicDialogRef):void {
+    ref.onClose.subscribe((response) => {
+      if (response) {
+        //navigate home app
+        this.router.navigate(['home'])
       }
     });
   }
