@@ -39,8 +39,12 @@ export class FindPeopleComponent implements OnInit {
     const jsonUser: string | null = sessionStorage.getItem(StorageKeys.INFORMATION_USER);
     if (!jsonUser) return;
     const userInfo: UserDTO = JSON.parse(jsonUser);
-    if (!userInfo.userName) return;
+    
+    this.sendRequestFetchPeople(userInfo, filter);
+  }
 
+  sendRequestFetchPeople(userInfo: UserDTO, filter: FilterDataView):void {
+    if (!userInfo.userName) return;
     this.userService.findPeople(userInfo.userName, filter).subscribe({
       next : (response: FindPeopleResponse) => {
         if (response.totalElements && response.users) {
