@@ -53,7 +53,7 @@ export class CreateUsersComponent {
     ref.onClose.subscribe((response) => {
       if (response) {
         //navigate home app
-        this.router.navigate(['home'])
+        this.router.navigate(['home','information'])
       }
     });
   }

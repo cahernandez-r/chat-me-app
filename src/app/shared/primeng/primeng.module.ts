@@ -11,6 +11,7 @@ import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { MenubarModule } from 'primeng/menubar';
+import { DataViewModule } from 'primeng/dataview';
 
 @NgModule({
   declarations: [],
@@ -29,7 +30,8 @@ import { MenubarModule } from 'primeng/menubar';
     ToastModule,
     TooltipModule,
     TranslateModule,
-    MenubarModule
+    MenubarModule,
+    DataViewModule
   ],
 })
 export class PrimengModule { }

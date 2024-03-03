@@ -1,1 +1,44 @@
-<h1>POr aqui</h1>
+<p-dataView
+  #dv
+  [value]="users"
+  layout="grid"
+  [totalRecords]="totalRecords"
+  [rows]="selectedSize"
+  [first]="first"
+  [rowsPerPageOptions]="[5,10,15]"
+  [paginator]="true"
+  [pageLinks]="5"
+  [lazy]="true"
+  (onLazyLoad)="lazyEventFindPeople($event)"
+>
+
+  <ng-template pTemplate="header">
+    <div class="flex justify-content-center">
+        <h2>People to chat</h2>
+    </div>
+  </ng-template>
+  <ng-template let-user pTemplate="gridItem">
+    <div class="flex justify-content-around flex-wrap p-3">
+      <div class="w-14rem border-solid h-15rem border-round-3xl	">
+        <div class="flex gap-2 justify-content-center my-5">
+          <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
+        </div>
+        <div class="flex gap-2 align-items-center justify-content-around">
+          <h3>{{user.userName}}</h3>
+          <p-button
+            icon="pi pi-comment"
+            severity="success"
+            [raised]="true"
+            [rounded]="true"
+            [outlined]="true"
+            pTooltip="{{ 'tooltip.send-message' | translate }}"
+            tooltipPosition="top"
+          ></p-button>
+        </div>
+
+      </div>
+    </div>
+
+  </ng-template>
+</p-dataView>
+<!-- {{users | json}} -->
