@@ -6,12 +6,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
 import { AvatarModule } from 'primeng/avatar';
 import { FormsModule } from '@angular/forms';
-import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { MenubarModule } from 'primeng/menubar';
 import { DataViewModule } from 'primeng/dataview';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 
 @NgModule({
   declarations: [],
@@ -31,7 +32,11 @@ import { DataViewModule } from 'primeng/dataview';
     TooltipModule,
     TranslateModule,
     MenubarModule,
-    DataViewModule
+    DataViewModule,
+    ScrollPanelModule 
   ],
+  providers: [
+    DialogService
+  ]
 })
 export class PrimengModule { }

@@ -4,6 +4,8 @@ import { UserDTO } from '../../models/user';
 import { StorageKeys } from 'src/app/core/constants/enums';
 import { FindPeopleResponse } from '../../models/find-people-result';
 import { FilterDataView } from '../../models/filter-data-view';
+import { DialogService } from 'primeng/dynamicdialog';
+import { ChatComponent } from 'src/app/shared/components/chat.component';
 
 @Component({
   selector: 'app-find-people',
@@ -16,8 +18,11 @@ export class FindPeopleComponent implements OnInit {
   totalRecords: number = 0;
   first: number = 0;
   selectedSize: number = 5;
-  constructor(private userService: UserService) {
+  loadingFetchPeople: boolean = false;
+  constructor(private userService: UserService,
+    private dialogService: DialogService
 
+  ) {
   }
 
   ngOnInit(): void {
@@ -44,6 +49,7 @@ export class FindPeopleComponent implements OnInit {
   }
 
   sendRequestFetchPeople(userInfo: UserDTO, filter: FilterDataView):void {
+    this.loadingFetchPeople = true;
     if (!userInfo.userName) return;
     this.userService.findPeople(userInfo.userName, filter).subscribe({
       next : (response: FindPeopleResponse) => {
@@ -52,6 +58,13 @@ export class FindPeopleComponent implements OnInit {
           this.totalRecords = response.totalElements;
         }
       }
-    });
+    }).add(() => this.loadingFetchPeople = false);
+  }
+
+  showModalSendMessage(user: UserDTO):void {
+    this.dialogService.open(ChatComponent, {
+      closable: false,
+      style: {'min-width': '390px', 'height': '450px', 'max-width': '400px'},
+    })
   }
 }

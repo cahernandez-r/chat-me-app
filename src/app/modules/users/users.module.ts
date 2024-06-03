@@ -9,6 +9,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FindPeopleComponent } from './components/find-people/find-people.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { FindPeopleComponent } from './components/find-people/find-people.compon
     CommonModule,
     UsersRoutingModule,
     PrimengModule,
+    SharedModule
   ],
   providers: [
     DialogService,

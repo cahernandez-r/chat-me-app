@@ -1,0 +1,36 @@
+<p-panel class="w-full">
+  <ng-template pTemplate="header">
+    Chat with <p class="font-bold ml-2"> {{nameReceiver}}</p>
+  </ng-template>
+  <ng-template pTemplate="body">
+    <p-scrollPanel [style]="{ width: '100%', height: '200px' }">
+      <div>
+        <div *ngFor="let chat of historyChat" class="my-3">
+          <div class="w-full flex justify-content-end">
+            <p *ngIf="chat.transmitter" class="message-transmitter"> {{chat.message}} </p>
+          </div>
+          <p *ngIf="!chat.transmitter" class="message-reciever"> {{chat.message}} </p>
+        </div>
+      </div>
+    </p-scrollPanel>
+    <input
+      pInputText
+      id="userName"
+      type="text"
+      placeholder="message..."
+      [(ngModel)]="message"
+      (keydown.enter)="onSendMessage()"
+    />
+    <p-button
+      icon="pi pi-send"
+      severity="success"
+      [raised]="true"
+      [rounded]="true"
+      pTooltip="{{ 'tooltip.submit' | translate }}"
+      tooltipPosition="top"
+      class="ml-2"
+      (onClick)="onSendMessage()"
+    >
+    </p-button>
+  </ng-template>
+</p-panel>

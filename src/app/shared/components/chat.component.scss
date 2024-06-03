@@ -1,0 +1,21 @@
+$base-color-message-transmitter: #89cfa3;
+$base-color-message-receiver: #e7e7e7;
+.message-transmitter {
+    padding: 5px;
+    background-color: $base-color-message-transmitter;
+    border-radius: 10px;
+    width: auto;
+    display: inline;
+    word-break: break-all;
+    font-weight: 500;
+}
+
+.message-reciever {
+    padding: 5px;
+    background-color: $base-color-message-receiver;
+    border-radius: 10px;
+    width: auto;
+    display: inline;
+    word-break: break-all;
+    font-weight: 500;
+}
