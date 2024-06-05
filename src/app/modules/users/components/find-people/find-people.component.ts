@@ -65,6 +65,9 @@ export class FindPeopleComponent implements OnInit {
     this.dialogService.open(ChatComponent, {
       closable: false,
       style: {'min-width': '390px', 'height': '450px', 'max-width': '400px'},
+      data: {
+        userToChat: user
+      }
     })
   }
 }

@@ -3,58 +3,66 @@ import { Router } from '@angular/router';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UserService } from '../../services/user.service';
 import { ModalValidateSecurityWordComponent } from '../modals/modal-validate-security-word/modal-validate-security-word.component';
+import { WebSocketService } from 'src/app/shared/services/web-socket/web-socket.service';
 
 @Component({
-  selector: 'app-create-users',
-  templateUrl: './create-users.component.html',
-  styleUrls: ['./create-users.component.scss']
+	selector: 'app-create-users',
+	templateUrl: './create-users.component.html',
+	styleUrls: ['./create-users.component.scss']
 })
 export class CreateUsersComponent {
 
-  userName: string = "";
-  loading: boolean = false;
+	userName: string = "";
+	loading: boolean = false;
 
-  constructor(private router: Router, private dialogService: DialogService, private userService: UserService) {
+	constructor(
+		private router: Router,
+		private dialogService: DialogService,
+		private userService: UserService,
+		private webSocketService: WebSocketService
+	) {
 
-  }
+	}
 
-  createUserOrLogin():void {
-    this.loading = true;
-    this.validateUserExists(this.userName);
-  }
+	createUserOrLogin(): void {
+		this.loading = true;
+		this.validateUserExists(this.userName);
 
-  validateUserExists(userName: string):void {
-    this.userService.validateUserExists(userName).subscribe({
+	}
 
-      next:(response: boolean) => {
-        this.openModalSecurityWord(response);
-      },
-      error:(e) => console.log(e)
+	validateUserExists(userName: string): void {
+		this.userService.validateUserExists(userName).subscribe({
 
-    }).add(() => this.loading = false);
-  }
+			next: (response: boolean) => {
+				this.openModalSecurityWord(response);
+			},
+			error: (e) => console.log(e)
 
-  openModalSecurityWord(userExistsInBd: boolean): void {
-    const ref: DynamicDialogRef = this.dialogService.open(ModalValidateSecurityWordComponent, {
-      //header: "Validate security word",
-      width: "30%",
-      height: "35%",
-      closable: false,
-      data: {
-        userExists: userExistsInBd,
-        userName: this.userName
-      }
-    });
+		}).add(() => this.loading = false);
+	}
 
-    this.onCloseModal(ref);
-  }
+	openModalSecurityWord(userExistsInBd: boolean): void {
+		const ref: DynamicDialogRef = this.dialogService.open(ModalValidateSecurityWordComponent, {
+			//header: "Validate security word",
+			width: "30%",
+			height: "35%",
+			closable: false,
+			data: {
+				userExists: userExistsInBd,
+				userName: this.userName
+			}
+		});
 
-  onCloseModal(ref: DynamicDialogRef):void {
-    ref.onClose.subscribe((response) => {
-      if (response) {
-        //navigate home app
-        this.router.navigate(['home','information'])
-      }
-    });
-  }
+		this.onCloseModal(ref);
+	}
+
+	onCloseModal(ref: DynamicDialogRef): void {
+		ref.onClose.subscribe((response) => {
+			if (response) {
+				//navigate home app
+				this.webSocketService.connectSocket(this.userName);
+				this.router.navigate(['home', 'information'])
+			}
+		});
+	}
 }
