@@ -5,7 +5,7 @@ import { StorageKeys } from 'src/app/core/constants/enums';
 import { FindPeopleResponse } from '../../models/find-people-result';
 import { FilterDataView } from '../../models/filter-data-view';
 import { DialogService } from 'primeng/dynamicdialog';
-import { ChatComponent } from 'src/app/shared/components/chat.component';
+import { ModalChatComponent } from '../modals/modal-chat/modal-chat.component';
 
 @Component({
   selector: 'app-find-people',
@@ -62,11 +62,11 @@ export class FindPeopleComponent implements OnInit {
   }
 
   showModalSendMessage(user: UserDTO):void {
-    this.dialogService.open(ChatComponent, {
+    this.dialogService.open(ModalChatComponent, {
       closable: false,
       style: {'min-width': '390px', 'height': '450px', 'max-width': '400px'},
       data: {
-        userToChat: user
+        recipient: user
       }
     })
   }

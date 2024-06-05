@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { WebSocketService } from '../services/web-socket/web-socket.service';
+import { UserDTO } from 'src/app/modules/users/models/user';
 
 @Component({
 	selector: 'app-chat',
@@ -8,9 +9,12 @@ import { WebSocketService } from '../services/web-socket/web-socket.service';
 })
 export class ChatComponent {
 
-	nameReceiver: string = "fabio";
-	message: string = "";
+	@Input()
 	historyChat: any[] = [];
+	@Input()
+	userRecipient!: UserDTO;
+	userLogued!: UserDTO;
+	message: string = "";
 
 	constructor(private webSocketService: WebSocketService) {
 	}

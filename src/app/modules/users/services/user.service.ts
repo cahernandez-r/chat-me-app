@@ -21,7 +21,7 @@ export class UserService {
     return this.http.get<boolean>(backendUrl(`users/validateSecurityWord/${userName}/${securityWord}`));
   }
 
-  createUser(userToCreate: UserDTO):Observable<UserDTO> {
+  createUser(userToCreate: UserDTO): Observable<UserDTO> {
     return this.http.post<UserDTO>(
       backendUrl(`users/createUser`),
       userToCreate);
@@ -31,6 +31,12 @@ export class UserService {
     return this.http.post<FindPeopleResponse>(
       backendUrl(`users/findPeople/${userName}`),
         {...filter}
+      );
+  }
+
+  fetchInfoUser(userName: string): Observable<UserDTO> {
+    return this.http.get<UserDTO>(
+      backendUrl(`users/fetchInfoUser/${userName}`)
       );
   }
 }

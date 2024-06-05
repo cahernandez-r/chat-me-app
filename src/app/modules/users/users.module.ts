@@ -7,17 +7,18 @@ import { PrimengModule } from 'src/app/shared/primeng/primeng.module';
 import { ModalValidateSecurityWordComponent } from './components/modals/modal-validate-security-word/modal-validate-security-word.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { FindPeopleComponent } from './components/find-people/find-people.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ModalChatComponent } from './components/modals/modal-chat/modal-chat.component';
 
 
 @NgModule({
   declarations: [
     CreateUsersComponent,
     ModalValidateSecurityWordComponent,
-    FindPeopleComponent
-
+    FindPeopleComponent,
+    ModalChatComponent
   ],
   imports: [
     CommonModule,
