@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UserDTO } from '../../../models/user';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
 	selector: 'app-modal-chat',
@@ -9,12 +9,21 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 export class ModalChatComponent {
 
 	userRecipient!: UserDTO;
+	userSender!: UserDTO;
 
-	constructor(private config: DynamicDialogConfig) {
+	constructor(
+		private config: DynamicDialogConfig,
+		private ref: DynamicDialogRef
+	) {
 		this.getParametersModal();
 	}
 
 	getParametersModal():void {
 		this.userRecipient = this.config.data?.recipient;
+		this.userSender = this.config.data?.sender;
+	}
+
+	onCloseModal():void {
+		this.ref.close();
 	}
 }

@@ -8,66 +8,75 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { ModalChatComponent } from '../modals/modal-chat/modal-chat.component';
 
 @Component({
-  selector: 'app-find-people',
-  templateUrl: './find-people.component.html',
-  styleUrls: ['./find-people.component.scss']
+	selector: 'app-find-people',
+	templateUrl: './find-people.component.html',
+	styleUrls: ['./find-people.component.scss']
 })
 export class FindPeopleComponent implements OnInit {
 
-  users: UserDTO[] = [];
-  totalRecords: number = 0;
-  first: number = 0;
-  selectedSize: number = 5;
-  loadingFetchPeople: boolean = false;
-  constructor(private userService: UserService,
-    private dialogService: DialogService
+	userLogued!: UserDTO;
+	users: UserDTO[] = [];
+	totalRecords: number = 0;
+	first: number = 0;
+	selectedSize: number = 5;
+	loadingFetchPeople: boolean = false;
+	constructor(private userService: UserService,
+		private dialogService: DialogService
 
-  ) {
-  }
+	) {
+		this.getUserLogued();
+	}
 
-  ngOnInit(): void {
+	ngOnInit(): void {
 
-  }
+	}
 
-  lazyEventFindPeople(event: any) {
-    this.first = event.first;
-    const selectedSize = event.rows;
-    const selectedPage = Math.floor(this.first / this.selectedSize);
-    const objectPagination: FilterDataView = {
-      pageNumber: selectedPage,
-      pageSize: selectedSize
-    }
-    this.findPeople(objectPagination);
-  }
+	lazyEventFindPeople(event: any) {
+		this.first = event.first;
+		const selectedSize = event.rows;
+		const selectedPage = Math.floor(this.first / this.selectedSize);
+		const objectPagination: FilterDataView = {
+			pageNumber: selectedPage,
+			pageSize: selectedSize
+		}
+		this.findPeople(objectPagination);
+	}
 
-  findPeople(filter: FilterDataView):void {
-    const jsonUser: string | null = sessionStorage.getItem(StorageKeys.INFORMATION_USER);
-    if (!jsonUser) return;
-    const userInfo: UserDTO = JSON.parse(jsonUser);
-    
-    this.sendRequestFetchPeople(userInfo, filter);
-  }
+	findPeople(filter: FilterDataView): void {
+		if (this.userLogued=== null)
+			return;
+		this.sendRequestFetchPeople(this.userLogued, filter);
+	}
 
-  sendRequestFetchPeople(userInfo: UserDTO, filter: FilterDataView):void {
-    this.loadingFetchPeople = true;
-    if (!userInfo.userName) return;
-    this.userService.findPeople(userInfo.userName, filter).subscribe({
-      next : (response: FindPeopleResponse) => {
-        if (response.totalElements && response.users) {
-          this.users = response.users;
-          this.totalRecords = response.totalElements;
-        }
-      }
-    }).add(() => this.loadingFetchPeople = false);
-  }
+	sendRequestFetchPeople(userInfo: UserDTO, filter: FilterDataView): void {
+		this.loadingFetchPeople = true;
+		if (!userInfo.userName) return;
+		this.userService.findPeople(userInfo.userName, filter).subscribe({
+			next: (response: FindPeopleResponse) => {
+				if (response.totalElements && response.users) {
+					this.users = response.users;
+					this.totalRecords = response.totalElements;
+				}
+			}
+		}).add(() => this.loadingFetchPeople = false);
+	}
 
-  showModalSendMessage(user: UserDTO):void {
-    this.dialogService.open(ModalChatComponent, {
-      closable: false,
-      style: {'min-width': '390px', 'height': '450px', 'max-width': '400px'},
-      data: {
-        recipient: user
-      }
-    })
-  }
+	showModalSendMessage(user: UserDTO): void {
+		this.dialogService.open(ModalChatComponent, {
+			closable: false,
+			style: { 'min-width': '390px', 'height': '500px', 'max-width': '400px' },
+			data: {
+				recipient: user,
+				sender: this.userLogued
+      		}
+		});
+	}
+
+	getUserLogued():UserDTO | null {
+
+		const jsonUser: string | null = sessionStorage.getItem(StorageKeys.INFORMATION_USER);;
+		if (!jsonUser) return null;
+		this.userLogued = JSON.parse(jsonUser);
+		return this.userLogued;
+	}
 }

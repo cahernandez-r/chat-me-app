@@ -57,6 +57,7 @@ export class CreateUsersComponent {
 	}
 
 	onCloseModal(ref: DynamicDialogRef): void {
+		console.log("heerre")
 		ref.onClose.subscribe((response) => {
 			if (response) {
 				//navigate home app

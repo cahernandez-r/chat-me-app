@@ -7,9 +7,11 @@
       <div>
         <div *ngFor="let chat of historyChat" class="my-3">
           <div class="w-full flex justify-content-end">
-            <p *ngIf="chat.transmitter" class="message-transmitter"> {{chat.message}} </p>
+            
+            <p *ngIf="chat.idSender === userSender.id" class="message-transmitter"> {{chat.message}} </p>
+            
           </div>
-          <p *ngIf="!chat.transmitter" class="message-reciever"> {{chat.message}} </p>
+          <p *ngIf="chat.idSender !== userSender.id" class="message-reciever"> {{chat.message}} </p>
         </div>
       </div>
     </p-scrollPanel>

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { WebSocketService } from '../services/web-socket/web-socket.service';
 import { UserDTO } from 'src/app/modules/users/models/user';
+import { MessageRequest } from '../models/message-request';
 
 @Component({
 	selector: 'app-chat',
@@ -10,18 +11,31 @@ import { UserDTO } from 'src/app/modules/users/models/user';
 export class ChatComponent {
 
 	@Input()
-	historyChat: any[] = [];
+	historyChat: MessageRequest[] = [];
 	@Input()
 	userRecipient!: UserDTO;
-	userLogued!: UserDTO;
+	@Input()
+	userSender!: UserDTO;
+	@Input()
+	uuidChat!: string;
+	
 	message: string = "";
 
 	constructor(private webSocketService: WebSocketService) {
 	}
 
 	onSendMessage(): void {
-		this.historyChat.push({ message: this.message, transmitter: true }, { message: "Soy el otro mensaje", transmitter: false });
-		this.webSocketService.sendMessage(this.message, "deiner");
-		this.message = ""
+		if (!this.userSender.userName)return;
+		this.historyChat.push({ message: this.message, idSender: this.userSender.id, idRecipient: this.userRecipient.id }, { message: "Soy el otro mensaje", idSender: this.userRecipient.id, idRecipient: this.userSender.id});
+		const messageRequest: MessageRequest = {
+			idRecipient: this.userRecipient.id,
+			idSender: this.userSender.id,
+			message: this.message,
+			uuidChat: "",
+		}
+		if (this.userSender && this.userRecipient){
+			this.webSocketService.sendMessage(messageRequest, this.userRecipient.userName ?? "", this.userSender.userName);
+			this.message = ""
+		}
 	}
 }
