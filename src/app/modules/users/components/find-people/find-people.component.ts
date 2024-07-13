@@ -73,7 +73,6 @@ export class FindPeopleComponent implements OnInit {
 	}
 
 	getUserLogued():UserDTO | null {
-
 		const jsonUser: string | null = sessionStorage.getItem(StorageKeys.INFORMATION_USER);;
 		if (!jsonUser) return null;
 		this.userLogued = JSON.parse(jsonUser);

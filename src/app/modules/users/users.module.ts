@@ -29,7 +29,7 @@ import { ModalChatComponent } from './components/modals/modal-chat/modal-chat.co
   providers: [
     DialogService,
     MessageService,
-    HttpClient
+    HttpClient,
   ]
 })
 export class UsersModule { }

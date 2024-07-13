@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { StorageKeys } from 'src/app/core/constants/enums';
 import { UserDTO } from 'src/app/modules/users/models/user';
-import { WebSocketService } from 'src/app/shared/services/web-socket/web-socket.service';
+import { WebSocketService } from 'src/app/shared/services/web-socket.service';
 
 @Component({
 	selector: 'app-principal-page',

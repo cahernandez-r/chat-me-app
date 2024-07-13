@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Client } from '@stomp/stompjs';
-import { MessageRequest } from '../../models/message-request';
-import { HttpClient } from '@angular/common/http';
+import { MessageRequest } from '../models/message-request';
 
 @Injectable({
 	providedIn: 'root',
@@ -18,7 +17,6 @@ export class WebSocketService {
 			console.error("Its not posible conect to websocket username is null");
 			return;
 		}
-		// console.log(userName)
 		this.clientWS = new Client({
 			brokerURL: 'ws://localhost:7001/ws',
 			onConnect: () => {
@@ -32,13 +30,9 @@ export class WebSocketService {
 		  });
 		this.clientWS.activate();
 	}
+	
 
-	sendMessage(payload: MessageRequest, recipient: string, sender: string): void {
-		if (this.clientWS === null) {
-			console.log("herrr")
-			//this.connectSocket(sender);
-		}
-		console.log(recipient)
+	sendMessage(payload: MessageRequest, recipient: string): void {
 		this.clientWS.publish({ destination: `/app/chat-${recipient}`, body: JSON.stringify(payload) });
 	}
 }

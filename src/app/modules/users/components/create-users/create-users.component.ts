@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UserService } from '../../services/user.service';
 import { ModalValidateSecurityWordComponent } from '../modals/modal-validate-security-word/modal-validate-security-word.component';
-import { WebSocketService } from 'src/app/shared/services/web-socket/web-socket.service';
+import { WebSocketService } from 'src/app/shared/services/web-socket.service';
 
 @Component({
 	selector: 'app-create-users',
@@ -57,7 +57,6 @@ export class CreateUsersComponent {
 	}
 
 	onCloseModal(ref: DynamicDialogRef): void {
-		console.log("heerre")
 		ref.onClose.subscribe((response) => {
 			if (response) {
 				//navigate home app
