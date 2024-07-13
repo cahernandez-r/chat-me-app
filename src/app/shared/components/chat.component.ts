@@ -28,7 +28,6 @@ export class ChatComponent {
 
 	onSendMessage(): void {
 		if (!this.userSender.userName)return;
-		//this.historyChat.push({ message: this.message, idSender: this.userSender.id, idRecipient: this.userRecipient.id }, { message: "Soy el otro mensaje", idSender: this.userRecipient.id, idRecipient: this.userSender.id});
 		const messageRequest: MessageRequest = {
 			idRecipient: this.userRecipient.id,
 			idSender: this.userSender.id,
@@ -37,6 +36,7 @@ export class ChatComponent {
 		}
 		if (this.userSender && this.userRecipient){
 			this.webSocketService.sendMessage(messageRequest, this.userRecipient.userName ?? "");
+			this.historyChat.push({ ...messageRequest as MessageDTO})
 			this.message = ""
 		}
 	}

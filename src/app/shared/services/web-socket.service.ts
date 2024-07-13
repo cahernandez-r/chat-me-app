@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Client } from '@stomp/stompjs';
 import { MessageRequest } from '../models/message-request';
+import { ChatStateService } from './chat-state.service';
+import { MessageDTO } from '../models/message-dto';
+import { environment } from 'src/enviroments/enviroment';
 
 @Injectable({
 	providedIn: 'root',
@@ -8,21 +11,23 @@ import { MessageRequest } from '../models/message-request';
 export class WebSocketService {
 	
 	clientWS!: Client;
-	constructor() {
+	constructor(private chatStateService: ChatStateService) {
 
 	}
 
 	connectSocket(userName: string | undefined | null) {
+		const urlWhitoutPrefix = environment.url_back_end.replace(/^https?:\/\//, '')
 		if(!userName || this.clientWS) {
 			console.error("Its not posible conect to websocket username is null");
 			return;
 		}
 		this.clientWS = new Client({
-			brokerURL: 'ws://localhost:7001/ws',
+			brokerURL: `ws://${urlWhitoutPrefix}ws`,
 			onConnect: () => {
-				console.log("connected")
-			this.clientWS.subscribe( `/queue/messages-${userName}`, message =>
-				console.log(`Received: ${message.body}`)
+			this.clientWS.subscribe( `/queue/messages-${userName}`, message =>{
+				this.chatStateService.setStateChat(JSON.parse(message.body) as MessageDTO)
+
+				}
 			  );
 			  
 			},

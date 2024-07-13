@@ -7,6 +7,8 @@ import { CreateChatRoomResponse } from 'src/app/shared/models/create-chat-room-r
 import { ChatRoom } from 'src/app/shared/models/find-chat-room';
 import { MessageDTO } from 'src/app/shared/models/message-dto';
 import { Client } from '@stomp/stompjs';
+import { ChatStateService } from 'src/app/shared/services/chat-state.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-modal-chat',
@@ -19,21 +21,22 @@ export class ModalChatComponent {
 	uuidChat!: string;
 	historyChat: MessageDTO [] = [];
 	clientWS!: Client;
+	subStateChat!: Subscription
 
 	constructor(
 		private config: DynamicDialogConfig,
 		private ref: DynamicDialogRef,
 		private chatService :ChatService,
+		private chatStateService:ChatStateService
 	) {
 		this.getParametersModal();
 		this.createOrFindChatRoom();
-	}
-
+	}	
+	
 	ngOnInit(): void {
-		// this.activateConnectionToSocket();
+		this.subscribeMessages();
 	}
 	
-
 	getParametersModal():void {
 		this.userRecipient = this.config.data?.recipient;
 		this.userSender = this.config.data?.sender;
@@ -69,14 +72,14 @@ export class ModalChatComponent {
 		});
 	}
 
-	//Method to findChatRoom
-	// onRecieveMessage():void {
-	// 	this.clientWS.onConnect((message) =>
-	// 	console.log(message)
-	// 	)
-	// }	
+	subscribeMessages():void {
+		this.subStateChat =  this.chatStateService.stateChat.subscribe((message) => {
+			this.historyChat = this.historyChat.concat(message)
+		})
+	}	
 
 	onCloseModal():void {
+		this.subStateChat.unsubscribe();
 		this.ref.close();
 	}
 }
